@@ -1,26 +1,46 @@
-﻿namespace DeskMarket.Data.Models
+﻿namespace DeskMarket.Data.Models;
+
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using static Common.DataConstants;
+
+public class Product
 {
-    using Microsoft.AspNetCore.Identity;
+    [Key]
+    public int Id { get; set; }
 
-    public class Product
-    {
-        public int Id { get; set; }
-        public string ProductName { get; set; } = null!;
-        public string Description { get; set; } = null!;
-        public decimal Price { get; set; }
+    [Required]
+    [MaxLength(ProductNameMaxLength)]
+    public string ProductName { get; set; } = null!;
 
-        public string ImageUrl { get; set; } = null!;
-        public string SellerId { get; set; } = null!;
-        public IdentityUser Seller { get; set; } = null!;
+    [Required]
+    [MaxLength(DescriptionMaxLength)]
+    public string Description { get; set; } = null!;
 
-        public DateTime AddedOn { get; set; }
+    [Required]
+    public decimal Price { get; set; }
 
-        public int CategoryId { get; set; }
+    public string? ImageUrl { get; set; }
 
-        public Category Category { get; set; } = null!;
+    [Required]
+    [ForeignKey(nameof(Seller))]
+    public string SellerId { get; set; } = null!;
 
-        public bool IsDeleted { get; set; }
+    [Required]
+    public IdentityUser Seller { get; set; } = null!;
 
-        public IEnumerable<ProductClient> ProductsClients { get; set; } = new HashSet<ProductClient>();
-    }
+    [Required]
+    public DateTime AddedOn { get; set; }
+
+    [Required]
+    [ForeignKey(nameof(Category))]
+    public int CategoryId { get; set; }
+
+    [Required]
+    public Category Category { get; set; } = null!;
+
+    public bool IsDeleted { get; set; } = false;
+
+    public IEnumerable<ProductClient> ProductsClients { get; set; } = new HashSet<ProductClient>();
 }

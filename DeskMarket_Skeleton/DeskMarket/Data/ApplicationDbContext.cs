@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using DeskMarket.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeskMarket.Data
@@ -10,6 +11,11 @@ namespace DeskMarket.Data
         {
         }
 
+        public virtual DbSet<Product> Products { get; init; }
+
+        public DbSet<Category> Categories { get; init; }
+
+        public DbSet<ProductClient> ProductsClients { get; init; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -1,16 +1,19 @@
-﻿namespace DeskMarket.Data.Models
+﻿namespace DeskMarket.Data.Models;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
+
+[PrimaryKey(nameof(ProductId), nameof(ClientId))]
+public class ProductClient
 {
-    using Microsoft.AspNetCore.Identity;
+    [ForeignKey(nameof(Product))]
+    public int ProductId { get; set; }
 
-    public class ProductClient
-    {
-        public int ProductId { get; set; }
+    public Product Product { get; set; } = null!;
 
-        public Product Product { get; set; } = null!;
+    [ForeignKey(nameof(Client))]
+    public string ClientId { get; set; } = null!;
 
-
-        public string ClientId { get; set; } = null!;
-
-        public IdentityUser Client { get; set; } = null!;
-    }
+    public IdentityUser Client { get; set; } = null!;
 }
